@@ -1,20 +1,20 @@
 flowchart LR
-  A[Local Files: taxi_zone_lookup.csv, yellow_tripdata.parquet] --> B[S3 Landing / Raw Zone]
-  B --> C[Glue Crawler]
-  C --> D[Glue Data Catalog]
-  D --> E[Athena External Tables]
+  A["Local Files: taxi_zone_lookup.csv, yellow_tripdata.parquet"] --> B["S3 Landing / Raw Zone"]
+  B --> C["Glue Crawler"]
+  C --> D["Glue Data Catalog"]
+  D --> E["Athena External Tables"]
 
-  E --> F[ETL Transformation (Athena CTAS / Glue Spark)]
-  F --> G[S3 Validated Zone]
+  E --> F["ETL Transformation - Athena CTAS or Glue Spark"]
+  F --> G["S3 Validated Zone"]
 
-  G --> H[Data Quality Checks]
-  H -->|Pass| I[S3 Curated Zone]
-  H -->|Fail| X[SNS Alert + Stop Pipeline]
+  G --> H["Data Quality Checks"]
+  H -->|Pass| I["S3 Curated Zone"]
+  H -->|Fail| X["SNS Alert and Stop Pipeline"]
 
-  I --> J[MDM Golden Zone]
-  J --> K[Dimensional Model]
-  K --> L[Analytics Queries]
+  I --> J["MDM Golden Zone"]
+  J --> K["Dimensional Model"]
+  K --> L["Analytics Queries"]
 
-  M[Step Functions Orchestration] --> F
+  M["Step Functions Orchestration"] --> F
   M --> H
-  M --> N[Audit Logs + CloudWatch]
+  M --> N["Audit Logs and CloudWatch"]
