@@ -1,0 +1,55 @@
+{
+  "project": "NYC Taxi Governed Data Platform",
+  "region": "us-east-1",
+  "bucket": "task6-varsha-datalake",
+  "zones": {
+    "landing_raw": "s3://task6-varsha-datalake/landing-raw/",
+    "validated": "s3://task6-varsha-datalake/validated/",
+    "curated": "s3://task6-varsha-datalake/curated/",
+    "master": "s3://task6-varsha-datalake/master/",
+    "dq_results": "s3://task6-varsha-datalake/dq/",
+    "athena_results": "s3://task6-varsha-datalake/athena-results/"
+  },
+  "datasets": [
+    {
+      "name": "taxi_zone_lookup",
+      "zone": "landing_raw",
+      "path": "s3://task6-varsha-datalake/landing-raw/taxi_zone_lookup.csv",
+      "format": "csv",
+      "owner": "data-engineering",
+      "steward": "analytics",
+      "classification": "internal",
+      "retention_days": 365,
+      "critical_data_elements": ["LocationID", "Borough", "Zone", "service_zone"],
+      "quality_expectations": {
+        "LocationID_not_null": true,
+        "LocationID_unique": true,
+        "Zone_not_blank": true
+      }
+    },
+    {
+      "name": "yellow_tripdata_2025_08",
+      "zone": "landing_raw",
+      "path": "s3://task6-varsha-datalake/landing-raw/yellow_tripdata_2025-08.parquet",
+      "format": "parquet",
+      "owner": "data-engineering",
+      "steward": "analytics",
+      "classification": "internal",
+      "retention_days": 365,
+      "critical_data_elements": [
+        "vendorid",
+        "tpep_pickup_datetime",
+        "pulocationid",
+        "dolocationid",
+        "trip_distance",
+        "total_amount"
+      ],
+      "quality_expectations": {
+        "pulocationid_not_null": true,
+        "dolocationid_not_null": true,
+        "trip_distance_min": 0,
+        "total_amount_min": 0
+      }
+    }
+  ]
+}
