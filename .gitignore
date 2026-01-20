@@ -1,0 +1,18 @@
+# --- Security ---
+*aws_credentials*
+*.pem
+.env
+.env.*
+
+# --- Data files (raw / large) ---
+*.csv
+*.parquet
+*.json
+
+# --- Python ---
+__pycache__/
+*.pyc
+
+# --- OS / Editor ---
+.DS_Store
+*.log
